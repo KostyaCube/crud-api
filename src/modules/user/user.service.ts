@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../auth/entities/user.entity';
@@ -18,13 +18,7 @@ export class UserService {
   async findOneByEmail(email: string): Promise<User | null> {
     const user = await this.userRepository
       .createQueryBuilder('user')
-      .select([
-        'user.id',
-        'user.email',
-        'user.firstName',
-        'user.lastName',
-        'user.password',
-      ])
+      .select(['user.id', 'user.email', 'user.firstName', 'user.lastName', 'user.password'])
       .where('user.email = :email', { email })
       .getOne();
 
