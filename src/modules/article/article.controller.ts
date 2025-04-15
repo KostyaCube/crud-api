@@ -19,6 +19,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { TokenPayload } from 'src/strategies/jwt.strategy';
 import { Article } from './entities/article.entity';
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
+import { QueryDto } from './dto/query.dto';
 
 interface AuthRequest extends Request {
   user: TokenPayload;
@@ -35,7 +36,7 @@ export class ArticleController {
   }
 
   @Get()
-  async findAll(@Query() query: any): Promise<PaginatedResponseDto<Article>> {
+  async findAll(@Query() query: QueryDto): Promise<PaginatedResponseDto<Article>> {
     return await this.articleService.findAll(query);
   }
 

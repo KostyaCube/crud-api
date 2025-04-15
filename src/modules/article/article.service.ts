@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { User } from '../auth/entities/user.entity';
 import { Article } from './entities/article.entity';
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
+import { QueryDto, SortOrder } from './dto/query.dto';
 
 @Injectable()
 export class ArticleService {
@@ -19,15 +20,17 @@ export class ArticleService {
     return this.articleRepository.save(article);
   }
 
-  async findAll(query: any): Promise<PaginatedResponseDto<Article>> {
+  async findAll(query: QueryDto): Promise<PaginatedResponseDto<Article>> {
     const take = Number(query.limit) || 10;
     const skip = Number(query.skip) || 0;
+    const sortBy = query.sortBy || 'publishedAt';
+    const sortOrder = query.sortOrder || SortOrder.DESC;
 
     const qb = this.articleRepository
       .createQueryBuilder('article')
-      .leftJoin('article.author', 'author')
+      .leftJoinAndSelect('article.author', 'author')
       .addSelect(['author.id', 'author.firstName', 'author.lastName'])
-      .orderBy('article.publishedAt', 'DESC')
+      .orderBy(`article.${sortBy}`, sortOrder)
       .skip(skip)
       .take(take);
 
