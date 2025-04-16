@@ -1,4 +1,4 @@
-## Project available on:
+## Project doc available on:
 
 # http://82.202.168.156:4000/api
 
