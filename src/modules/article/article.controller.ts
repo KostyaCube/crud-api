@@ -11,6 +11,7 @@ import {
   Query,
   Req,
   Request,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -21,7 +22,7 @@ import { Article } from './entities/article.entity';
 import { PaginatedResponseDto } from './dto/paginated-response.dto';
 import { QueryDto } from './dto/query.dto';
 
-interface AuthRequest extends Request {
+export interface AuthRequest extends Request {
   user: TokenPayload;
 }
 
@@ -32,6 +33,9 @@ export class ArticleController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   create(@Body() dto: CreateArticleDto, @Req() req: AuthRequest): Promise<Article> {
+    if (!req.user) {
+      throw new UnauthorizedException('User is not authorized');
+    }
     return this.articleService.create(dto, +req.user.id);
   }
 
