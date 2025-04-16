@@ -1,21 +1,28 @@
-import { IsOptional, IsInt, IsDateString, IsString, IsEnum } from 'class-validator';
+import { IsOptional, IsDateString, IsString, IsEnum } from 'class-validator';
 
 export enum SortOrder {
   ASC = 'ASC',
   DESC = 'DESC',
 }
 
+export enum ArticleSortBy {
+  TITLE = 'title',
+  DESCRIPTION = 'description',
+  PUBLISHED_AT = 'publishedAt',
+  CREATED_AT = 'createdAt',
+}
+
 export class QueryDto {
   @IsOptional()
-  @IsInt()
+  @IsString()
   limit?: string;
 
   @IsOptional()
-  @IsInt()
+  @IsString()
   skip?: string;
 
   @IsOptional()
-  @IsInt()
+  @IsString()
   authorId?: string;
 
   @IsOptional()
@@ -23,9 +30,8 @@ export class QueryDto {
   publishedAfter?: string;
 
   @IsOptional()
-  @IsString()
-  @IsEnum(SortOrder)
-  sortBy?: string;
+  @IsEnum(ArticleSortBy)
+  sortBy?: ArticleSortBy;
 
   @IsOptional()
   @IsEnum(SortOrder)
