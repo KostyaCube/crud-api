@@ -1,3 +1,7 @@
+## Project available on:
+
+# http://82.202.168.156:4000/api
+
 ## Project setup
 
 ```bash
@@ -17,15 +21,3 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
