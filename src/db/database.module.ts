@@ -25,7 +25,7 @@ type DB_TYPE = 'postgres';
         logging: false,
         migrationsRun: true,
         autoLoadEntities: true,
-        synchronize: false,
+        synchronize: true,
         cli: { migrationsDir: 'src/migrations' },
       }),
     }),

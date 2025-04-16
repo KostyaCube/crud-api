@@ -23,7 +23,7 @@ export class ArticleService {
       ...dto,
       author: { id: userId } as User,
     });
-    await this.invalidateArticleCache();
+    await this.invalidateArticleCache(); // сброс кэши при создании новой статьи
     return this.articleRepository.save(article);
   }
 
@@ -33,8 +33,8 @@ export class ArticleService {
     const sortBy = query.sortBy || 'publishedAt';
     const sortOrder = query.sortOrder || SortOrder.DESC;
 
-    const key = `articles-${sortBy}:${sortOrder}:${take}:${skip}:${query.authorId || ''}:${query.publishedAfter || ''}`;
-    const cachedArticles = await this.cacheManager.get<PaginatedResponseDto<Article>>(key);
+    const key = `articles-${sortBy}:${sortOrder}:${take}:${skip}:${query.authorId || ''}:${query.publishedAfter || ''}`; // создание уникального ключа для кэширования выдачи по запросу
+    const cachedArticles = await this.cacheManager.get<PaginatedResponseDto<Article>>(key); // поиск закэшированного ответа
 
     if (cachedArticles) return cachedArticles;
     const qb = this.articleRepository
@@ -58,7 +58,7 @@ export class ArticleService {
     const [data, total] = await qb.getManyAndCount();
 
     const result = { data, total };
-    await this.cacheManager.set(key, result, 10000);
+    await this.cacheManager.set(key, result, 10000); // кэширование ответа
     await this.addArticleCacheKey(key);
 
     return result;
@@ -114,6 +114,7 @@ export class ArticleService {
     }
   }
 
+  // очистка кэша выдачи статей по поисковым параметрам при добавлении, изменении или редактировании статей
   async invalidateArticleCache() {
     const keys = await this.cacheManager.get<string[]>('cache:articles:keys');
     if (keys?.length) {

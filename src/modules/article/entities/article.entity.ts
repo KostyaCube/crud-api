@@ -1,5 +1,5 @@
 import { User } from 'src/modules/auth/entities/user.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Article {
@@ -12,9 +12,12 @@ export class Article {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'timestamp' })
-  publishedAt: Date;
-
   @ManyToOne(() => User, (user) => user.articles, { eager: true })
   author: User;
+
+  @CreateDateColumn()
+  publishedAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt?: Date;
 }

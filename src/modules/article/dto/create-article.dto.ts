@@ -1,4 +1,4 @@
-import { IsString, IsDateString, IsNotEmpty, Length } from 'class-validator';
+import { IsString, IsDateString, IsNotEmpty, Length, IsOptional } from 'class-validator';
 
 export class CreateArticleDto {
   @IsString()
@@ -10,8 +10,4 @@ export class CreateArticleDto {
   @IsNotEmpty()
   @Length(20, 1500)
   description: string;
-
-  @IsDateString()
-  @IsNotEmpty()
-  publishedAt: string;
 }

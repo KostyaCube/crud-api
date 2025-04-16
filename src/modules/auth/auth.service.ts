@@ -13,12 +13,12 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto) {
-    const existingUser = await this.userService.findOneByEmail(dto.email);
+    const existingUser = await this.userService.findOneByEmail(dto.email); // проверка на уникальность почтового адреса
     if (existingUser) {
       throw new ConflictException('User already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
+    const hashedPassword = await bcrypt.hash(dto.password, 10); // шифрование пароля
     const user = await this.userService.create({
       ...dto,
       password: hashedPassword,
@@ -42,6 +42,7 @@ export class AuthService {
   }
 
   private generateToken(user: User) {
+    // генерация ивыдача токена, который содержит в себе информацию о пользователе
     const payload = { id: user.id, email: user.email, name: user.firstName };
     return {
       access_token: this.jwtService.sign(payload),

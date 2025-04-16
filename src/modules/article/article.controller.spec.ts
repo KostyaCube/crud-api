@@ -52,7 +52,6 @@ describe('ArticleController', () => {
       const createArticleDto: CreateArticleDto = {
         title: 'New Article',
         description: 'Description for test new article',
-        publishedAt: '2024-11-01',
       };
 
       const result = { id: 1, ...createArticleDto }; // Пример того, что может вернуться из create
@@ -70,7 +69,6 @@ describe('ArticleController', () => {
       title: 'New Article',
       description:
         'Some content with long description lorem ipsum dolor sit amet consectetur adipiscing elit lorem ipsum dolor sit amet consectetur adipiscing elit',
-      publishedAt: '10-10-2024',
     };
 
     // Попробуем вызвать create с неавторизованным запросом
@@ -130,7 +128,6 @@ describe('ArticleController', () => {
       const dto = new CreateArticleDto();
       dto.title = 'Valid Title';
       dto.description = 'short description'; // Описание слишком короткое
-      dto.publishedAt = '2024-11-01';
 
       const errors = await validate(dto);
       expect(errors.length).toBeGreaterThan(0); // Ошибки должны быть
@@ -141,7 +138,6 @@ describe('ArticleController', () => {
       dto.title = 'Valid Title';
       dto.description =
         'Some content with long description lorem ipsum dolor sit amet consectetur adipiscing elit lorem ipsum dolor sit amet consectetur adipiscing elit';
-      dto.publishedAt = '2024-11-01';
 
       const errors = await validate(dto);
       expect(errors.length).toBe(0); // Ошибок нет

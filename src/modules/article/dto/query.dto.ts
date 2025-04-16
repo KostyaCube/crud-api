@@ -27,7 +27,7 @@ export class QueryDto {
 
   @IsOptional()
   @IsDateString()
-  publishedAfter?: string;
+  publishedAfter?: Date;
 
   @IsOptional()
   @IsEnum(ArticleSortBy)
