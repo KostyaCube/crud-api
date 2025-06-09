@@ -1,6 +1,11 @@
-## Project doc available on:
+## This is a simple Nest.js web application that allows users to:
 
-# http://82.202.168.156:4000/api
+- Register and log in
+- Create, read, update, and delete articles (CRUD)
+- View a list of articles with filtering and pagination
+  
+documentation avialiable on:
+# http://82.202.168.156:5000/api
 
 ## Project setup
 
